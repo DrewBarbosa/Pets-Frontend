@@ -4,7 +4,7 @@ import { ApiService } from '../../services/ApiService';
 import { AxiosError } from 'axios';
 
 
-export function useIndex(){
+export function useIndex() {
     const [listaPets, setListaPets] = useState<Pet[]>([]),
         [petSelecionado, setPetSelecionado] = useState<Pet | null>(null),
         [email, setEmail] = useState(''),
@@ -12,21 +12,21 @@ export function useIndex(){
         [mensagem, setMensagem] = useState('');
 
     useEffect(() => {
-      ApiService.get('/pets')
-        .then((resposta) => {
-            setListaPets(resposta.data);
-        })
+        ApiService.get('/pets')
+            .then((resposta) => {
+                setListaPets(resposta.data);
+            })
     }, [])
 
     useEffect(() => {
-        if(petSelecionado === null){
+        if (petSelecionado === null) {
             limparFormulario();
         }
     }, [petSelecionado])
 
-    function adotar(){
-        if(petSelecionado !== null){
-            if(validarDadosAdocao()){
+    function adotar() {
+        if (petSelecionado !== null) {
+            if (validarDadosAdocao()) {
                 ApiService.post('/adocoes', {
                     pet_id: petSelecionado.id,
                     email,
@@ -46,11 +46,11 @@ export function useIndex(){
         }
     }
 
-    function validarDadosAdocao(){
+    function validarDadosAdocao() {
         return email.length > 0 && valor.length > 0;
     }
 
-    function limparFormulario(){
+    function limparFormulario() {
         setEmail('');
         setValor('');
     }
@@ -63,7 +63,7 @@ export function useIndex(){
         setEmail,
         valor,
         setValor,
-        mensagem, 
+        mensagem,
         setMensagem,
         adotar
     };
